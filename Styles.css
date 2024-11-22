@@ -1,44 +1,66 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    background-color: #f4f4f4;
     color: #333;
+    line-height: 1.6;
 }
 
-h1, h2 {
+h2 {
     text-align: center;
+    color: #007bff;
+    margin-top: 20px;
 }
 
+/* Form Styles */
 form {
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-input, select, button {
+input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 button {
-    background: #007bff;
-    color: #fff;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
-    background: #0056b3;
+    background-color: #0056b3;
+}
+
+/* Dashboard Styles */
+.dashboard {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#walletBalance {
+    font-size: 24px;
+    font-weight: bold;
+    color: #28a745;
 }
