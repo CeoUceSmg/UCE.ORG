@@ -26,6 +26,39 @@ if (loginForm) {
     });
 }
 
+// Sign-Up Functionality
+const signupForm = document.getElementById('signupForm');
+
+if (signupForm) {
+    signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Get form values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const balance = parseFloat(document.getElementById('balance').value);
+
+        // Retrieve existing users from localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Check if the email is already registered
+        const emailExists = users.some(user => user.email === email);
+
+        if (emailExists) {
+            alert('Email already exists! Please log in instead.');
+        } else {
+            // Add new user to the users array
+            users.push({ email, password, balance });
+
+            // Save updated users to localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Sign-Up successful! You can now log in.');
+            window.location.href = 'login.html';
+        }
+    });
+}
+
 // Load Dashboard
 const welcomeMessage = document.getElementById('welcomeMessage');
 if (welcomeMessage) {
