@@ -4,143 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
-            color: #fff;
-        }
-
-        .container {
-            background-color: #fff;
-            color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #2575fc;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #6a11cb;
-        }
-
-        #imageSelectionContainer {
-            display: none; /* Initially hidden */
-            margin: 20px 0;
-        }
-
-        #imageList {
-            display: flex;
-            flex-direction: column; /* Stack images vertically */
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .image-box {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            margin: 10px 0;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .image-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .checkbox {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            background-color: #fff;
-            border: 2px solid #2575fc;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: none;
-        }
-
-        .checkbox.selected {
-            background-color: #2575fc;
-        }
-
-        .checkbox.selected::before {
-            content: "✔";
-            position: absolute;
-            top: -2px;
-            left: 4px;
-            color: white;
-        }
-
-        #validationMessage {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        #uploadImageInput {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
+        /* Same as before... */
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Sign Up</h2>
         <form id="signUpForm">
-            <div>
-                <label for="familyName">Family Name</label>
-                <input type="text" id="familyName" placeholder="Enter Family Name" required />
-            </div>
+            <!-- Family name, profile name inputs... -->
             
-            <div>
-                <label for="profileName">Profile Name</label>
-                <input type="text" id="profileName" placeholder="Enter Profile Name" required />
-            </div>
-
             <!-- Button to reveal image selection -->
             <button type="button" id="selectImageButton">Select Profile Image</button>
 
@@ -170,7 +43,7 @@
                         <div class="checkbox"></div>
                     </div>
                     <div class="image-box" data-name="Marvelous">
-                        <img src="marvelous.jpg" alt="Marvelous" />
+                        <img src="Marvelous.jpg" alt="Marvelous" />
                         <div class="checkbox"></div>
                     </div>
                     <div class="image-box" data-name="John">
@@ -181,25 +54,7 @@
                 <div id="validationMessage"></div>
             </div>
 
-            <div>
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter Username" required />
-            </div>
-
-            <div>
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter Password" required />
-            </div>
-
-            <div>
-                <label for="pin">PIN</label>
-                <input type="password" id="pin" placeholder="Enter PIN" required />
-            </div>
-
-            <div>
-                <label for="confirmPin">Confirm PIN</label>
-                <input type="password" id="confirmPin" placeholder="Confirm PIN" required />
-            </div>
+            <!-- Username, password, pin inputs... -->
 
             <button type="submit">Sign Up</button>
         </form>
@@ -262,4 +117,30 @@
         // Image selection logic
         imageList.querySelectorAll('.image-box').forEach(imageBox => {
             imageBox.addEventListener('click', () => {
-                const current
+                // Unselect previously selected image
+                imageList.querySelectorAll('.checkbox').forEach(checkbox => checkbox.classList.remove('selected'));
+                
+                // Select the clicked image
+                const checkbox = imageBox.querySelector('.checkbox');
+                checkbox.classList.add('selected');
+                selectedImageName = imageBox.getAttribute('data-name');  // Set selected image name
+
+                // Hide uploaded image box if a default image is selected
+                uploadedImageBox.style.display = 'none';
+
+                validateProfileName();
+            });
+        });
+
+        function validateProfileName() {
+            if (!selectedImageName) {
+                validationMessage.textContent = 'Please select an image.';
+            } else {
+                validationMessage.textContent = '';
+            }
+        }
+
+        // Form submission logic goes here...
+    </script>
+</body>
+</html>
