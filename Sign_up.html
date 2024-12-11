@@ -34,7 +34,7 @@
             margin-bottom: 20px;
         }
 
-        input {
+        input, button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -44,13 +44,9 @@
         }
 
         button {
-            width: 100%;
-            padding: 10px;
             background-color: #2575fc;
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
         }
 
@@ -65,17 +61,16 @@
 
         #imageList {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-around;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
 
         .image-box {
             position: relative;
-            width: 80px;
-            height: 80px;
-            margin: 10px 0;
-            border: 2px solid #ccc;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
             border-radius: 5px;
             overflow: hidden;
             cursor: pointer;
@@ -95,8 +90,8 @@
             background-color: #fff;
             border: 2px solid #2575fc;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             display: none;
         }
 
@@ -113,8 +108,8 @@
         }
 
         #uploadedImagePreview {
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             border-radius: 5px;
             margin-bottom: 10px;
             border: 2px solid #ccc;
@@ -146,41 +141,51 @@
 </head>
 <body>
     <div class="container">
-        <h2>Sign Up</h2>
+        <h2>Welcome to the Sign Up Page</h2>
         <form id="signUpForm">
-            <button type="button" id="selectImageButton">Select Profile Image</button>
-
-            <label for="uploadImageInput" id="uploadImageLabel">Upload Your Image</label>
-            <input type="file" id="uploadImageInput" accept="image/*" />
-
-            <img id="uploadedImagePreview" src="" alt="Uploaded Image" />
-
-            <div id="imageSelectionContainer">
-                <label>Select Profile Image</label>
-                <div id="imageList">
-                    <div class="image-box" data-name="Israel">
-                        <img src="Israel.jpg" alt="Israel" />
-                        <div class="checkbox"></div>
-                    </div>
-                    <div class="image-box" data-name="Perfect">
-                        <img src="Perfect.jpg" alt="Perfect" />
-                        <div class="checkbox"></div>
-                    </div>
-                    <div class="image-box" data-name="Progress">
-                        <img src="Progress.jpg" alt="Progress" />
-                        <div class="checkbox"></div>
-                    </div>
-                    <div class="image-box" data-name="Marvelous">
-                        <img src="Marvelous.jpg" alt="Marvelous" />
-                        <div class="checkbox"></div>
-                    </div>
-                    <div class="image-box" data-name="John">
-                        <img src="John.jpg" alt="John" />
-                        <div class="checkbox"></div>
+            <!-- Fields -->
+            <input type="text" id="familyName" placeholder="Family Name" required />
+            <input type="text" id="profileName" placeholder="Profile Name" required />
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+            <input type="password" id="pin" placeholder="PIN" required />
+            <input type="password" id="confirmPin" placeholder="Confirm PIN" required />
+            
+            <!-- Select Image Section -->
+            <div>
+                <button type="button" id="selectImageButton">Select Image</button>
+                <div id="imageSelectionContainer">
+                    <div id="imageList">
+                        <div class="image-box" data-name="Israel">
+                            <img src="Israel.jpg" alt="Israel" />
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="image-box" data-name="Perfect">
+                            <img src="Perfect.jpg" alt="Perfect" />
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="image-box" data-name="Progress">
+                            <img src="Progress.jpg" alt="Progress" />
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="image-box" data-name="Marvelous">
+                            <img src="Marvelous.jpg" alt="Marvelous" />
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="image-box" data-name="John">
+                            <img src="John.jpg" alt="John" />
+                            <div class="checkbox"></div>
+                        </div>
                     </div>
                 </div>
-                <div id="validationMessage"></div>
             </div>
+
+            <!-- Upload Image Section -->
+            <label for="uploadImageInput" id="uploadImageLabel">Upload Image</label>
+            <input type="file" id="uploadImageInput" accept="image/*" />
+            <img id="uploadedImagePreview" src="" alt="Uploaded Image" />
+            <div id="validationMessage"></div>
 
             <button type="submit">Sign Up</button>
         </form>
@@ -190,33 +195,31 @@
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDIaJdHUsQjA3VvOBs4swVSKuzVit-M3O8",
-            authDomain: "the-family1.firebaseapp.com",
-            projectId: "the-family1",
-            storageBucket: "the-family1.firebasestorage.app",
-            messagingSenderId: "209849449724",
-            appId: "1:209849449724:web:0d5642de406cc7cdc8eb79",
-            measurementId: "G-X64HKH4M14"
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('signUpForm');
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
 
-        // DOM elements
+        // Add validation or any other logic here before redirecting
+        
+        // Redirect to homepage.html after successful sign up
+        window.location.href = 'homepage.html';
+    });
+});
+    <script>
         const form = document.getElementById('signUpForm');
-        const imageList = document.getElementById('imageList');
-        const validationMessage = document.getElementById('validationMessage');
+        const selectImageButton = document.getElementById('selectImageButton');
         const uploadImageInput = document.getElementById('uploadImageInput');
         const uploadedImagePreview = document.getElementById('uploadedImagePreview');
+        const imageSelectionContainer = document.getElementById('imageSelectionContainer');
+        const imageList = document.getElementById('imageList');
+        const validationMessage = document.getElementById('validationMessage');
         let selectedImageName = '';
 
         // Show image selection container when the button is clicked
-        document.getElementById('selectImageButton').addEventListener('click', function() {
-            document.getElementById('imageSelectionContainer').style.display = 'block';
+        selectImageButton.addEventListener('click', function() {
+            imageSelectionContainer.style.display = 'block';
         });
 
         // Handle image upload
@@ -225,13 +228,12 @@
             if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const imageUrl = e.target.result;
-                    uploadedImagePreview.src = imageUrl;
+                    uploadedImagePreview.src = e.target.result;
                     uploadedImagePreview.style.display = 'block'; // Show uploaded image preview
                     selectedImageName = 'Uploaded Image';  // Set name for validation
                     validateProfileName();
                     // Hide the image selection container once an image is uploaded
-                    document.getElementById('imageSelectionContainer').style.display = 'none';
+                    imageSelectionContainer.style.display = 'none';
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -239,7 +241,7 @@
             }
         });
 
-        // Handle image selection from default list
+        // Handle image selection from the default list
         imageList.querySelectorAll('.image-box').forEach(imageBox => {
             imageBox.addEventListener('click', () => {
                 // Unselect previously selected image
@@ -251,6 +253,13 @@
                 selectedImageName = imageBox.getAttribute('data-name');  // Set selected image name
 
                 // Hide the image selection container once an image is selected
-                document.getElementById('imageSelectionContainer').style.display = 'none';
+                imageSelectionContainer.style.display = 'none';
                 validateProfileName();
             });
+        });
+
+        // Validation function for profile name matching the selected image
+        function validateProfileName() {
+            const profileName = document.getElementById('profileName').value.trim();
+            if (profileName !== selectedImageName && selectedImageName !== 'Uploaded Image') {
+                validationMessage.textContent = 'Profile name must match
