@@ -3,27 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - The Family</title>
+    <title>Sign Up</title>
+
     <style>
-        /* Your custom styles here */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
         }
 
         .container {
-            width: 50%;
-            margin: 0 auto;
+            background-color: #fff;
+            color: #333;
             padding: 20px;
-            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
         }
 
         h2 {
-            text-align: center;
+            font-size: 24px;
             margin-bottom: 20px;
         }
 
@@ -31,91 +39,157 @@
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #ccc;
             border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
         }
 
         button {
             width: 100%;
             padding: 10px;
-            background-color: blue;
+            background-color: #2575fc;
             color: white;
             border: none;
             border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
         }
 
         button:hover {
-            background-color: darkblue;
+            background-color: #6a11cb;
         }
 
-        .image-selection {
+        #imageSelectionContainer {
+            margin: 20px 0;
+        }
+
+        #imageList {
             display: flex;
-            gap: 10px;
-            margin: 10px 0;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
 
-        .image-selection img {
-            width: 50px;
-            height: 50px;
+        .image-box {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
             cursor: pointer;
-            border: 2px solid transparent;
         }
 
-        .image-selection img.selected {
-            border-color: green;
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
         }
 
-        #uploadBtn {
+        .checkbox {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: #fff;
+            border: 2px solid #2575fc;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
             display: none;
+        }
+
+        .checkbox.selected {
+            background-color: #2575fc;
+        }
+
+        .checkbox.selected::before {
+            content: "✔";
+            position: absolute;
+            top: -2px;
+            left: 4px;
+            color: white;
+        }
+
+        #validationMessage {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>Sign Up</h2>
-
         <form id="signUpForm">
-            <label for="familyName">Family Name:</label>
-            <input type="text" id="familyName" required>
-
-            <label for="profileName">Profile Name:</label>
-            <input type="text" id="profileName" required>
-
-            <label for="username">Username:</label>
-            <input type="text" id="username" required>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" required>
-
-            <label for="pin">PIN:</label>
-            <input type="text" id="pin" required>
-
-            <label for="confirmPin">Confirm PIN:</label>
-            <input type="text" id="confirmPin" required>
-
-            <div class="image-selection">
-                <img src="images/Israel.jpg" alt="Israel" data-name="Israel">
-                <img src="images/Perfect.jpg" alt="Perfect" data-name="Perfect">
-                <img src="images/Progress.jpg" alt="Progress" data-name="Progress">
-                <img src="images/Marvelous.jpg" alt="Marvelous" data-name="Marvelous">
-                <img src="images/John.jpg" alt="John" data-name="John">
+            <div>
+                <label for="familyName">Family Name</label>
+                <input type="text" id="familyName" placeholder="Enter Family Name" required />
+            </div>
+            
+            <div>
+                <label for="profileName">Profile Name</label>
+                <input type="text" id="profileName" placeholder="Enter Profile Name" required />
             </div>
 
-            <label for="profileImage">Select Profile Image:</label>
-            <input type="file" id="profileImage" accept="image/*">
+            <!-- Image Selection -->
+            <div id="imageSelectionContainer">
+                <label>Select Profile Image</label>
+                <div id="imageList">
+                    <div class="image-box" data-name="Israel">
+                        <img src="Israel.jpg" alt="Israel" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="Perfect">
+                        <img src="Perfect.jpg" alt="Perfect" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="Progress">
+                        <img src="Progress.jpg" alt="Progress" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="Marvelous">
+                        <img src="Marvelous.jpg" alt="Marvelous" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="John">
+                        <img src="John.jpg" alt="John" />
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+                <div id="validationMessage"></div>
+            </div>
+
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter Username" required />
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter Password" required />
+            </div>
+
+            <div>
+                <label for="pin">PIN</label>
+                <input type="password" id="pin" placeholder="Enter PIN" required />
+            </div>
+
+            <div>
+                <label for="confirmPin">Confirm PIN</label>
+                <input type="password" id="confirmPin" placeholder="Confirm PIN" required />
+            </div>
+
             <button type="submit">Sign Up</button>
         </form>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
-
     <script>
-        // Your Firebase Config
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDIaJdHUsQjA3VvOBs4swVSKuzVit-M3O8",
             authDomain: "the-family1.firebaseapp.com",
@@ -131,75 +205,76 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        // DOM elements
         const form = document.getElementById('signUpForm');
-        const profileImageInput = document.getElementById('profileImage');
-        const imageSelection = document.querySelectorAll('.image-selection img');
+        const profileNameInput = document.getElementById('profileName');
+        const familyNameInput = document.getElementById('familyName');
+        const imageList = document.getElementById('imageList');
+        const validationMessage = document.getElementById('validationMessage');
         let selectedImageName = '';
 
-        // Image Selection
-        imageSelection.forEach(image => {
-            image.addEventListener('click', () => {
-                imageSelection.forEach(img => img.classList.remove('selected'));
-                image.classList.add('selected');
-                selectedImageName = image.getAttribute('data-name');
+        // Image selection logic
+        imageList.querySelectorAll('.image-box').forEach(imageBox => {
+            imageBox.addEventListener('click', () => {
+                const currentImageName = imageBox.getAttribute('data-name');
+                
+                // Toggle checkbox selection
+                const checkbox = imageBox.querySelector('.checkbox');
+                if (checkbox.classList.contains('selected')) {
+                    checkbox.classList.remove('selected');
+                    selectedImageName = '';
+                } else {
+                    document.querySelectorAll('.checkbox').forEach(checkbox => checkbox.classList.remove('selected'));
+                    checkbox.classList.add('selected');
+                    selectedImageName = currentImageName;
+                }
+
+                // Validate profile name against selected image name
+                validateProfileName();
             });
         });
 
-        // Handle Image Upload
-        profileImageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                // You can upload the image to Firebase Storage here if needed
-                console.log("File selected:", file.name);
+        // Validate profile name input
+        function validateProfileName() {
+            const profileName = profileNameInput.value.trim();
+            if (profileName && selectedImageName && profileName !== selectedImageName) {
+                validationMessage.textContent = "Invalid profile name! It should match the selected image.";
+                validationMessage.style.color = 'red';
+            } else {
+                validationMessage.textContent = '';
             }
-        });
+        }
 
-        // Sign Up Form Submit
+        // Handle form submission
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const familyName = document.getElementById('familyName').value;
-            const profileName = document.getElementById('profileName').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const pin = document.getElementById('pin').value;
-            const confirmPin = document.getElementById('confirmPin').value;
+            const familyName = familyNameInput.value.trim();
+            const profileName = profileNameInput.value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const pin = document.getElementById('pin').value.trim();
+            const confirmPin = document.getElementById('confirmPin').value.trim();
 
+            // Ensure pin matches
             if (pin !== confirmPin) {
                 alert("PINs do not match!");
                 return;
             }
 
+            // Ensure image selection and name match
+            if (!selectedImageName) {
+                alert("Please select a profile image.");
+                return;
+            }
+            
             if (profileName !== selectedImageName) {
-                alert("Profile name does not match the selected image.");
+                alert("Profile name must match the selected image name.");
                 return;
             }
 
+            // Firebase Authentication: Create user
             auth.createUserWithEmailAndPassword(username + "@example.com", password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log("User signed up:", user);
-
-                    // Save user data to Firestore
-                    db.collection("users").doc(user.uid).set({
-                        familyName: familyName,
-                        profileName: profileName,
-                        username: username,
-                        pin: pin,
-                        profileImage: selectedImageName
-                    })
-                    .then(() => {
-                        alert("Sign Up Successful!");
-                    })
-                    .catch((error) => {
-                        console.error("Error saving user data:", error);
-                    });
-
-                })
-                .catch((error) => {
-                    console.error("Error signing up:", error.message);
-                });
-        });
-    </script>
-</body>
-</html>
+                    console.log("User signed up:", user
