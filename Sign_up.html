@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Family App</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js"></script>
+</head>
+<body>
+
+    <div class="signup-container">
+        <h2>Sign Up - Family App</h2>
+        
+        <form id="signup-form">
+            <label for="family-name">Family Name:</label>
+            <input type="text" id="family-name" name="family-name" required>
+
+            <label for="profile-name">Profile Name:</label>
+            <input type="text" id="profile-name" name="profile-name" required>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="pin">PIN:</label>
+            <input type="password" id="pin" name="pin" required>
+
+            <label for="confirm-pin">Confirm PIN:</label>
+            <input type="password" id="confirm-pin" name="confirm-pin" required>
+
+            <div>
+                <label>Select Profile Image:</label>
+                <input type="checkbox" id="image-selected" disabled> Done
+                <div id="image-list">
+                    <img src="images/Israel.jpg" alt="Israel" class="image-thumbnail" data-profile-name="Israel">
+                    <img src="images/Perfect.jpg" alt="Perfect" class="image-thumbnail" data-profile-name="perfect">
+                    <img src="images/Progress.jpg" alt="Progress" class="image-thumbnail" data-profile-name="progress">
+                    <img src="images/Marvelous.jpg" alt="Marvelous" class="image-thumbnail" data-profile-name="marvelous">
+                    <img src="images/John.jpg" alt="John" class="image-thumbnail" data-profile-name="John">
+                </div>
+                <button type="button" id="upload-image-btn">Upload Image</button>
+                <div id="image-upload-modal" class="modal">
+                    <input type="file" id="file-input" accept="image/*">
+                    <input type="text" id="uploaded-image-profile-name" placeholder="Profile Name for Image">
+                    <button type="button" id="save-uploaded-image">Save Image</button>
+                    <button type="button" id="close-upload-modal">Close</button>
+                </div>
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
