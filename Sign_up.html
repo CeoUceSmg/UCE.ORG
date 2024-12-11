@@ -188,6 +188,7 @@
             <div id="validationMessage"></div>
 
             <button type="submit">Sign Up</button>
+            <button type="button" id="loginButton">Go to Login</button>
         </form>
     </div>
 
@@ -208,6 +209,11 @@
     });
 });
     <script>
+        document.getElementById('loginButton').addEventListener('click', function() {
+    // Redirect to login.html when the login button is clicked
+    window.location.href = 'login.html';
+});
+        <script>
         const form = document.getElementById('signUpForm');
         const selectImageButton = document.getElementById('selectImageButton');
         const uploadImageInput = document.getElementById('uploadImageInput');
