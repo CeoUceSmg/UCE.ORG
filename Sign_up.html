@@ -34,7 +34,7 @@
             margin-bottom: 20px;
         }
 
-        input, button {
+        input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -44,9 +44,13 @@
         }
 
         button {
+            width: 100%;
+            padding: 10px;
             background-color: #2575fc;
             color: white;
             border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
         }
 
@@ -61,16 +65,17 @@
 
         #imageList {
             display: flex;
-            justify-content: space-around;
+            flex-direction: column;
+            align-items: center;
             margin-top: 10px;
-            flex-wrap: wrap;
         }
 
         .image-box {
             position: relative;
-            width: 50px;
-            height: 50px;
-            margin: 10px;
+            width: 80px;
+            height: 80px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
             border-radius: 5px;
             overflow: hidden;
             cursor: pointer;
@@ -90,8 +95,8 @@
             background-color: #fff;
             border: 2px solid #2575fc;
             border-radius: 50%;
-            width: 15px;
-            height: 15px;
+            width: 20px;
+            height: 20px;
             display: none;
         }
 
@@ -108,8 +113,8 @@
         }
 
         #uploadedImagePreview {
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             border-radius: 5px;
             margin-bottom: 10px;
             border: 2px solid #ccc;
@@ -141,105 +146,85 @@
 </head>
 <body>
     <div class="container">
-        <h2>Welcome to the Sign Up Page</h2>
+        <h2>Sign Up</h2>
         <form id="signUpForm">
-            <!-- Fields -->
-            <input type="text" id="familyName" placeholder="Family Name" required />
-            <input type="text" id="profileName" placeholder="Profile Name" required />
-            <input type="text" id="username" placeholder="Username" required />
-            <input type="password" id="password" placeholder="Password" required />
-            <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-            <input type="password" id="pin" placeholder="PIN" required />
-            <input type="password" id="confirmPin" placeholder="Confirm PIN" required />
-            
-            <!-- Select Image Section -->
-            <div>
-                <button type="button" id="selectImageButton">Select Image</button>
-                <div id="imageSelectionContainer">
-                    <div id="imageList">
-                        <div class="image-box" data-name="Israel">
-                            <img src="Israel.jpg" alt="Israel" />
-                            <div class="checkbox"></div>
-                        </div>
-                        <div class="image-box" data-name="Perfect">
-                            <img src="Perfect.jpg" alt="Perfect" />
-                            <div class="checkbox"></div>
-                        </div>
-                        <div class="image-box" data-name="Progress">
-                            <img src="Progress.jpg" alt="Progress" />
-                            <div class="checkbox"></div>
-                        </div>
-                        <div class="image-box" data-name="Marvelous">
-                            <img src="Marvelous.jpg" alt="Marvelous" />
-                            <div class="checkbox"></div>
-                        </div>
-                        <div class="image-box" data-name="John">
-                            <img src="John.jpg" alt="John" />
-                            <div class="checkbox"></div>
-                        </div>
+            <label>Family Name:</label>
+            <input type="text" id="familyName" required>
+
+            <label>Profile Name:</label>
+            <input type="text" id="profileName" required>
+
+            <label>Username:</label>
+            <input type="text" id="username" required>
+
+            <label>Password:</label>
+            <input type="password" id="password" required>
+
+            <label>PIN:</label>
+            <input type="password" id="pin" required>
+
+            <label>Confirm PIN:</label>
+            <input type="password" id="confirmPin" required>
+
+            <button type="button" id="selectImageButton">Select Profile Image</button>
+
+            <label for="uploadImageInput" id="uploadImageLabel">Upload Your Image</label>
+            <input type="file" id="uploadImageInput" accept="image/*" />
+
+            <img id="uploadedImagePreview" src="" alt="Uploaded Image" />
+
+            <div id="imageSelectionContainer">
+                <label>Select Profile Image</label>
+                <div id="imageList">
+                    <div class="image-box" data-name="Israel">
+                        <img src="Israel.jpg" alt="Israel" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="Perfect">
+                        <img src="Perfect.jpg" alt="Perfect" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="Progress">
+                        <img src="Progress.jpg" alt="Progress" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="Marvelous">
+                        <img src="Marvelous.jpg" alt="Marvelous" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="image-box" data-name="John">
+                        <img src="John.jpg" alt="John" />
+                        <div class="checkbox"></div>
                     </div>
                 </div>
             </div>
-
-            <!-- Upload Image Section -->
-            <label for="uploadImageInput" id="uploadImageLabel">Upload Image</label>
-            <input type="file" id="uploadImageInput" accept="image/*" />
-            <img id="uploadedImagePreview" src="" alt="Uploaded Image" />
-            <div id="validationMessage"></div>
 
             <button type="submit">Sign Up</button>
             <button type="button" id="loginButton">Go to Login</button>
         </form>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('signUpForm');
-
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form submission
-
-        // Add validation or any other logic here before redirecting
-        
-        // Redirect to homepage.html after successful sign up
-        window.location.href = 'homepage.html';
-    });
-});
-    <script>
-        document.getElementById('loginButton').addEventListener('click', function() {
-    // Redirect to login.html when the login button is clicked
-    window.location.href = 'login.html';
-});
-        <script>
-        const form = document.getElementById('signUpForm');
-        const selectImageButton = document.getElementById('selectImageButton');
-        const uploadImageInput = document.getElementById('uploadImageInput');
-        const uploadedImagePreview = document.getElementById('uploadedImagePreview');
-        const imageSelectionContainer = document.getElementById('imageSelectionContainer');
-        const imageList = document.getElementById('imageList');
-        const validationMessage = document.getElementById('validationMessage');
+        // Logic for Image Selection
         let selectedImageName = '';
 
         // Show image selection container when the button is clicked
-        selectImageButton.addEventListener('click', function() {
-            imageSelectionContainer.style.display = 'block';
+        document.getElementById('selectImageButton').addEventListener('click', function() {
+            document.getElementById('imageSelectionContainer').style.display = 'block';
         });
 
         // Handle image upload
+        const uploadImageInput = document.getElementById('uploadImageInput');
         uploadImageInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    uploadedImagePreview.src = e.target.result;
-                    uploadedImagePreview.style.display = 'block'; // Show uploaded image preview
-                    selectedImageName = 'Uploaded Image';  // Set name for validation
-                    validateProfileName();
-                    // Hide the image selection container once an image is uploaded
-                    imageSelectionContainer.style.display = 'none';
+                    const imageUrl = e.target.result;
+                    document.getElementById('uploadedImagePreview').src = imageUrl;
+                    document.getElementById('uploadedImagePreview').style.display = 'block';
+                    selectedImageName = 'Uploaded Image'; // Set name for validation
+                    document.getElementById('imageSelectionContainer').style.display = 'none';
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -247,25 +232,37 @@
             }
         });
 
-        // Handle image selection from the default list
-        imageList.querySelectorAll('.image-box').forEach(imageBox => {
+        // Handle image selection from list
+        document.querySelectorAll('.image-box').forEach(imageBox => {
             imageBox.addEventListener('click', () => {
                 // Unselect previously selected image
-                imageList.querySelectorAll('.checkbox').forEach(checkbox => checkbox.classList.remove('selected'));
+                document.querySelectorAll('.checkbox').forEach(checkbox => checkbox.classList.remove('selected'));
                 
                 // Select the clicked image
                 const checkbox = imageBox.querySelector('.checkbox');
                 checkbox.classList.add('selected');
-                selectedImageName = imageBox.getAttribute('data-name');  // Set selected image name
-
+                selectedImageName = imageBox.getAttribute('data-name');
+                
                 // Hide the image selection container once an image is selected
-                imageSelectionContainer.style.display = 'none';
-                validateProfileName();
+                document.getElementById('imageSelectionContainer').style.display = 'none';
             });
         });
 
-        // Validation function for profile name matching the selected image
-        function validateProfileName() {
-            const profileName = document.getElementById('profileName').value.trim();
-            if (profileName !== selectedImageName && selectedImageName !== 'Uploaded Image') {
-                validationMessage.textContent = 'Profile name must match
+        // Login button redirection
+        document.getElementById('loginButton').addEventListener('click', function() {
+            window.location.href = 'login.html';
+        });
+
+        // Form Submission (Redirect to homepage or show error)
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            if (selectedImageName === '') {
+                alert('Please select a profile image.');
+                return;
+            }
+            // Here you can add logic to save user data into the database
+            alert('Signed up successfully!');
+            window.location.href = 'homepage.html'; // Redirect to homepage after successful signup
+        });
+    </script>
+</body
