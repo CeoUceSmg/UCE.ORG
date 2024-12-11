@@ -5,31 +5,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <style>
-        /* Same as before... */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .container {
+            background-color: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #6a11cb;
+        }
+
+        #imageSelectionContainer {
+            display: none;
+            margin: 20px 0;
+        }
+
+        #imageList {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .image-box {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .checkbox {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: #fff;
+            border: 2px solid #2575fc;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: none;
+        }
+
+        .checkbox.selected {
+            background-color: #2575fc;
+        }
+
+        .checkbox.selected::before {
+            content: "✔";
+            position: absolute;
+            top: -2px;
+            left: 4px;
+            color: white;
+        }
+
+        #uploadedImagePreview {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 2px solid #ccc;
+            object-fit: cover;
+            display: none;
+        }
+
+        #uploadImageInput {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+
+        #uploadImageLabel {
+            cursor: pointer;
+            color: #2575fc;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        #validationMessage {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Sign Up</h2>
         <form id="signUpForm">
-            <!-- Family name, profile name inputs... -->
-            
-            <!-- Button to reveal image selection -->
             <button type="button" id="selectImageButton">Select Profile Image</button>
 
-            <!-- Upload image input -->
+            <label for="uploadImageInput" id="uploadImageLabel">Upload Your Image</label>
             <input type="file" id="uploadImageInput" accept="image/*" />
 
-            <!-- Image Selection (initially hidden) -->
+            <img id="uploadedImagePreview" src="" alt="Uploaded Image" />
+
             <div id="imageSelectionContainer">
                 <label>Select Profile Image</label>
                 <div id="imageList">
-                    <!-- Dynamically added images will appear here -->
-                    <div class="image-box" id="uploadedImage" style="display: none;">
-                        <img src="" alt="Uploaded Image" />
-                        <div class="checkbox"></div>
-                    </div>
-                    <!-- Default images -->
                     <div class="image-box" data-name="Israel">
                         <img src="Israel.jpg" alt="Israel" />
                         <div class="checkbox"></div>
@@ -53,8 +181,6 @@
                 </div>
                 <div id="validationMessage"></div>
             </div>
-
-            <!-- Username, password, pin inputs... -->
 
             <button type="submit">Sign Up</button>
         </form>
@@ -82,16 +208,13 @@
 
         // DOM elements
         const form = document.getElementById('signUpForm');
-        const profileNameInput = document.getElementById('profileName');
-        const familyNameInput = document.getElementById('familyName');
         const imageList = document.getElementById('imageList');
         const validationMessage = document.getElementById('validationMessage');
         const uploadImageInput = document.getElementById('uploadImageInput');
-        const uploadedImageBox = document.getElementById('uploadedImage');
-        const uploadedImageElement = uploadedImageBox.querySelector('img');
+        const uploadedImagePreview = document.getElementById('uploadedImagePreview');
         let selectedImageName = '';
 
-        // Reveal image selection container on button click
+        // Show image selection container when the button is clicked
         document.getElementById('selectImageButton').addEventListener('click', function() {
             document.getElementById('imageSelectionContainer').style.display = 'block';
         });
@@ -103,10 +226,12 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const imageUrl = e.target.result;
-                    uploadedImageElement.src = imageUrl;
-                    uploadedImageBox.style.display = 'block';  // Show the uploaded image box
+                    uploadedImagePreview.src = imageUrl;
+                    uploadedImagePreview.style.display = 'block'; // Show uploaded image preview
                     selectedImageName = 'Uploaded Image';  // Set name for validation
                     validateProfileName();
+                    // Hide the image selection container once an image is uploaded
+                    document.getElementById('imageSelectionContainer').style.display = 'none';
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -114,7 +239,7 @@
             }
         });
 
-        // Image selection logic
+        // Handle image selection from default list
         imageList.querySelectorAll('.image-box').forEach(imageBox => {
             imageBox.addEventListener('click', () => {
                 // Unselect previously selected image
@@ -125,22 +250,7 @@
                 checkbox.classList.add('selected');
                 selectedImageName = imageBox.getAttribute('data-name');  // Set selected image name
 
-                // Hide uploaded image box if a default image is selected
-                uploadedImageBox.style.display = 'none';
-
+                // Hide the image selection container once an image is selected
+                document.getElementById('imageSelectionContainer').style.display = 'none';
                 validateProfileName();
             });
-        });
-
-        function validateProfileName() {
-            if (!selectedImageName) {
-                validationMessage.textContent = 'Please select an image.';
-            } else {
-                validationMessage.textContent = '';
-            }
-        }
-
-        // Form submission logic goes here...
-    </script>
-</body>
-</html>
