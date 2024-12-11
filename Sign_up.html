@@ -60,21 +60,22 @@
         }
 
         #imageSelectionContainer {
+            display: none; /* Initially hidden */
             margin: 20px 0;
         }
 
         #imageList {
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            flex-direction: column; /* Stack images vertically */
+            align-items: center;
             margin-top: 10px;
         }
 
         .image-box {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 10px;
+            width: 50px;
+            height: 50px;
+            margin: 10px 0;
             border: 2px solid #ccc;
             border-radius: 5px;
             overflow: hidden;
@@ -117,6 +118,13 @@
             font-size: 12px;
             margin-top: 5px;
         }
+
+        #uploadImageInput {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -133,10 +141,22 @@
                 <input type="text" id="profileName" placeholder="Enter Profile Name" required />
             </div>
 
-            <!-- Image Selection -->
+            <!-- Button to reveal image selection -->
+            <button type="button" id="selectImageButton">Select Profile Image</button>
+
+            <!-- Upload image input -->
+            <input type="file" id="uploadImageInput" accept="image/*" />
+
+            <!-- Image Selection (initially hidden) -->
             <div id="imageSelectionContainer">
                 <label>Select Profile Image</label>
                 <div id="imageList">
+                    <!-- Dynamically added images will appear here -->
+                    <div class="image-box" id="uploadedImage" style="display: none;">
+                        <img src="" alt="Uploaded Image" />
+                        <div class="checkbox"></div>
+                    </div>
+                    <!-- Default images -->
                     <div class="image-box" data-name="Israel">
                         <img src="Israel.jpg" alt="Israel" />
                         <div class="checkbox"></div>
@@ -150,7 +170,7 @@
                         <div class="checkbox"></div>
                     </div>
                     <div class="image-box" data-name="Marvelous">
-                        <img src="Marvelous.jpg" alt="Marvelous" />
+                        <img src="marvelous.jpg" alt="Marvelous" />
                         <div class="checkbox"></div>
                     </div>
                     <div class="image-box" data-name="John">
@@ -211,70 +231,35 @@
         const familyNameInput = document.getElementById('familyName');
         const imageList = document.getElementById('imageList');
         const validationMessage = document.getElementById('validationMessage');
+        const uploadImageInput = document.getElementById('uploadImageInput');
+        const uploadedImageBox = document.getElementById('uploadedImage');
+        const uploadedImageElement = uploadedImageBox.querySelector('img');
         let selectedImageName = '';
+
+        // Reveal image selection container on button click
+        document.getElementById('selectImageButton').addEventListener('click', function() {
+            document.getElementById('imageSelectionContainer').style.display = 'block';
+        });
+
+        // Handle image upload
+        uploadImageInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    uploadedImageElement.src = imageUrl;
+                    uploadedImageBox.style.display = 'block';  // Show the uploaded image box
+                    selectedImageName = 'Uploaded Image';  // Set name for validation
+                    validateProfileName();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload a valid image file.');
+            }
+        });
 
         // Image selection logic
         imageList.querySelectorAll('.image-box').forEach(imageBox => {
             imageBox.addEventListener('click', () => {
-                const currentImageName = imageBox.getAttribute('data-name');
-                
-                // Toggle checkbox selection
-                const checkbox = imageBox.querySelector('.checkbox');
-                if (checkbox.classList.contains('selected')) {
-                    checkbox.classList.remove('selected');
-                    selectedImageName = '';
-                } else {
-                    document.querySelectorAll('.checkbox').forEach(checkbox => checkbox.classList.remove('selected'));
-                    checkbox.classList.add('selected');
-                    selectedImageName = currentImageName;
-                }
-
-                // Validate profile name against selected image name
-                validateProfileName();
-            });
-        });
-
-        // Validate profile name input
-        function validateProfileName() {
-            const profileName = profileNameInput.value.trim();
-            if (profileName && selectedImageName && profileName !== selectedImageName) {
-                validationMessage.textContent = "Invalid profile name! It should match the selected image.";
-                validationMessage.style.color = 'red';
-            } else {
-                validationMessage.textContent = '';
-            }
-        }
-
-        // Handle form submission
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const familyName = familyNameInput.value.trim();
-            const profileName = profileNameInput.value.trim();
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const pin = document.getElementById('pin').value.trim();
-            const confirmPin = document.getElementById('confirmPin').value.trim();
-
-            // Ensure pin matches
-            if (pin !== confirmPin) {
-                alert("PINs do not match!");
-                return;
-            }
-
-            // Ensure image selection and name match
-            if (!selectedImageName) {
-                alert("Please select a profile image.");
-                return;
-            }
-            
-            if (profileName !== selectedImageName) {
-                alert("Profile name must match the selected image name.");
-                return;
-            }
-
-            // Firebase Authentication: Create user
-            auth.createUserWithEmailAndPassword(username + "@example.com", password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    console.log("User signed up:", user
+                const current
